@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
 
 const DeckList = (props) => {
   return (
       <View style={styles.container}>
-        <Text>I am a decklist</Text>
+        {props.state.map((title) => (
+          <Text key={title}>{title}</Text>
+        ))}
       </View>
   );
 };
@@ -19,4 +23,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeckList;
+function mapStateToProps(state) {
+  return {
+    state: Object.keys(state)
+  };
+}
+
+export default connect(mapStateToProps)(DeckList);
