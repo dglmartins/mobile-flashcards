@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import DeckList from './components/DeckList';
+import AddDeck from './components/AddDeck';
 
 function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -20,7 +21,8 @@ class App extends Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <MobileFlashCardStatusBar backgroundColor={'white'} barStyle='dark-content'/>
-          <DeckList />
+          {/* <DeckList /> */}
+          <AddDeck/>
         </View>
       </Provider>
     );
