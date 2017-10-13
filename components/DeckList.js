@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import DeckList from './components/DeckList';
 
-class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <DeckList/>
+const DeckList = (props) => {
+  return (
+      <View>
+        <Text>I am a decklist</Text>
       </View>
-    );
-  }
-}
+  );
+};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -21,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App
+export default DeckList;
