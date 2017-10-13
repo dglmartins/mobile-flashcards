@@ -9,6 +9,7 @@ import reducer from './reducers';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 
+
 function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight}}>
@@ -68,12 +69,12 @@ const MainNavigator = StackNavigator({
 })
 
 class App extends Component {
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
-          <MobileFlashCardStatusBar backgroundColor={'white'} barStyle='dark-content'/>
-          {/* <DeckList /> */}
+          <MobileFlashCardStatusBar backgroundColor={'#006c84'} barStyle='light-content'/>
           <MainNavigator/>
         </View>
       </Provider>

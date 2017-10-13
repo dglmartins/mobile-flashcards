@@ -1,4 +1,7 @@
-import { ADD_DECK } from '../actions';
+import {
+  ADD_DECK,
+  GET_ALL_DECKS
+} from '../actions';
 
 const initialState = {
   React: {
@@ -25,9 +28,11 @@ const initialState = {
   }
 }
 
-function reducer (state = initialState, action) {
-  const { title } = action;
+function reducer (state = {}, action) {
+  const { title, decks } = action;
   switch (action.type) {
+    case GET_ALL_DECKS:
+      return decks;
     case ADD_DECK:
       return {
         ...state,
