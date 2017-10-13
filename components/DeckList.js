@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const DeckList = (props) => {
   return (
-      <View>
+      <View style={styles.container}>
         <Text>I am a decklist</Text>
       </View>
   );
