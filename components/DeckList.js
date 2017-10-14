@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { getDecks, saveDeckTitle, clearDecks } from '../utils/api';
-import { getAllDecks } from '../actions';
+import { getDecksAsyncStorage, clearDecksAsyncStorage, removeDeckAsyncStorage } from '../utils/api';
+import { getAllDecks, removeDeck, addDeck } from '../actions';
+import DeckItem from './DeckItem';
 
 class DeckList extends Component {
   componentDidMount() {
-    // saveDeckTitle('Javascript').then((res) => {
-    //   console.log(res)
-      getDecks().then((results) => {
+      getDecksAsyncStorage().then((results) => {
         if (results === null) {
           this.props.getAllDecks({});
         } else {
           this.props.getAllDecks(JSON.parse(results));
         }
       })
-    // })
-    // clearDecks()
   }
+
+  onDeleteDeck = (title) => {
+    removeDeckAsyncStorage(title).then(() => {
+      this.props.removeDeck(title)
+    });
+  }
+
   render() {
     const { decks } = this.props;
     return (
@@ -32,16 +36,10 @@ class DeckList extends Component {
               )
             : (
               decks.map((deck) => (
-                <View
-                  key={deck.title} style={styles.deckInfo}
-                >
-                  <Text style={styles.titleText}>
-                    {deck.title}
-                  </Text>
-                  <Text style={styles.cardCount}>
-                    {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
-                  </Text>
-                </View>
+                <DeckItem
+                  deck={deck} onDeleteDeck={this.onDeleteDeck}
+                  key={deck.title}
+                />
               ))
             )
           }
@@ -88,6 +86,28 @@ const styles = StyleSheet.create({
   noDeckText: {
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  buttonContainer: {
+    marginTop: 30,
+    flexDirection:'row',
+    justifyContent: 'space-around'
+  },
+  button: {
+    justifyContent: 'center',
+    borderRadius: 2,
+    height: 30,
+    width: 100,
+    shadowOpacity: 1,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    elevation: 1
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'white'
   }
 
 });
@@ -102,7 +122,8 @@ function mapStateToProps(decks) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllDecks: (data) => dispatch(getAllDecks(data))
+    getAllDecks: (data) => dispatch(getAllDecks(data)),
+    removeDeck: (data) => dispatch(removeDeck(data))
   };
 }
 

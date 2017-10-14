@@ -7,11 +7,26 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
+import { addDeck } from '../actions';
+import { saveDeckAsyncStorage } from '../utils/api';
+
 
 class AddDeck extends Component {
   state = {
     deckTitle: ''
   }
+
+  onAddDeck = () => {
+    const { deckTitle } = this.state;
+    if (deckTitle === '') {
+      alert('Please insert a title');
+      return;
+    }
+    saveDeckAsyncStorage(deckTitle).then(() => {
+      this.props.addDeck(deckTitle);
+    });
+  }
+
 
   render () {
     return (
@@ -29,7 +44,7 @@ class AddDeck extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={this.onAddDeck}>
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -124,4 +139,10 @@ const styles = StyleSheet.create({
 //   };
 // }
 
-export default connect()(AddDeck);
+function mapDispatchToProps(dispatch) {
+  return {
+    addDeck: (data) => dispatch(addDeck(data)),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AddDeck);

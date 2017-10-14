@@ -1,7 +1,9 @@
 import {
   ADD_DECK,
-  GET_ALL_DECKS
+  GET_ALL_DECKS,
+  REMOVE_DECK
 } from '../actions';
+import R from 'ramda';
 
 const initialState = {
   React: {
@@ -33,10 +35,12 @@ function reducer (state = {}, action) {
   switch (action.type) {
     case GET_ALL_DECKS:
       return decks;
+    case REMOVE_DECK:
+      return R.omit([title], state);
     case ADD_DECK:
       return {
         ...state,
-        [title]: { title }
+        [title]: { title, questions: [] }
       };
     default:
       return state;
