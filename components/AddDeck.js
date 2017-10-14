@@ -7,6 +7,7 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 import { addDeck } from '../actions';
 import { saveDeckAsyncStorage } from '../utils/api';
 
@@ -22,8 +23,15 @@ class AddDeck extends Component {
       alert('Please insert a title');
       return;
     }
+    if (this.props.decks[deckTitle]) {
+      alert('Deck already exists! Please try a different name or edit/delete the existing deck');
+      return;
+    }
     saveDeckAsyncStorage(deckTitle).then(() => {
       this.props.addDeck(deckTitle);
+      this.props.navigation.dispatch(NavigationActions.navigate({
+        routeName: 'Decks'
+      }))
     });
   }
 
@@ -131,13 +139,11 @@ const styles = StyleSheet.create({
   }
 });
 
-// function mapStateToProps(state) {
-//   return {
-//     state: Object.keys(state).map((title) => (
-//       state[title]
-//     ))
-//   };
-// }
+function mapStateToProps(decks) {
+  return {
+    decks
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -145,4 +151,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(AddDeck);
+export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
