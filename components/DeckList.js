@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 import { getDecksAsyncStorage, clearDecksAsyncStorage, removeDeckAsyncStorage } from '../utils/api';
 import { getAllDecks, removeDeck, addDeck } from '../actions';
 import DeckItem from './DeckItem';
@@ -22,6 +23,15 @@ class DeckList extends Component {
     });
   }
 
+  onNavigateToDeck = (deck)  => {
+    this.props.navigation.dispatch(NavigationActions.navigate(
+      {
+        routeName: 'DeckDetail',
+        params: {deck}
+      },
+    ))
+  }
+
   render() {
     const { decks } = this.props;
     return (
@@ -39,6 +49,7 @@ class DeckList extends Component {
                 <DeckItem
                   deck={deck} onDeleteDeck={this.onDeleteDeck}
                   key={deck.title}
+                  onNavigateToDeck={this.onNavigateToDeck}
                 />
               ))
             )

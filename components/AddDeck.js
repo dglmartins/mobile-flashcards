@@ -56,19 +56,6 @@ class AddDeck extends Component {
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>
-
-          {/* {props.state.map((deck) => (
-            <View
-              key={deck.title} style={styles.deckInfo}
-            >
-              <Text style={styles.titleText}>
-                {deck.title}
-              </Text>
-              <Text style={styles.cardCount}>
-                {deck.questions.length} cards
-              </Text>
-            </View>
-          ))} */}
         </View>
     );
   }

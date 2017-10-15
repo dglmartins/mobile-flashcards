@@ -1,77 +1,70 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-const DeckItem = (props) => {
-  const { deck, onDeleteDeck, onNavigateToDeck } = props;
+const DeckDetail = (props) => {
+  const { deck } = props.navigation.state.params
   return (
-    <View
-      key={deck.title} style={styles.deckInfo}
-    >
-      <Text style={styles.titleText}>
-        {deck.title}
-      </Text>
+
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>
+          {deck.title}
+        </Text>
+      </View>
       <Text style={styles.cardCount}>
         {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#16aacb'}]}
-          onPress={() => onNavigateToDeck(deck)}
-        >
+        <TouchableOpacity style={[styles.button, {backgroundColor: '#006c84'}]}>
           <Text style={styles.buttonText}>
-            See Deck
+            Add Card
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, {backgroundColor: 'red'}]}
-          onPress={() => onDeleteDeck(deck.title)}
+          style={[styles.button, {backgroundColor: '#16aacb'}]}
         >
           <Text style={styles.buttonText}>
-            Delete Deck
+            Start Quiz
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
+
 
 const styles = StyleSheet.create({
-  deckInfo: {
-    height: 125,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    alignSelf: 'stretch',
-    marginLeft: 20,
-    marginRight: 20,
+  container: {
+    flex: 1,
     justifyContent: 'center'
+  },
+  titleContainer: {
+    height: 50,
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'gray',
+    // alignSelf: 'stretch',
+    // marginLeft: 20,
+    // marginRight: 20,
+    // justifyContent: 'center'
 
   },
   titleText: {
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold'
   },
   cardCount: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 18,
     color: 'grey',
-    paddingTop: 5
-  },
-  noDeckContainer: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  noDeckText: {
-    fontSize: 20,
-    fontWeight: 'bold'
   },
   buttonContainer: {
     marginTop: 30,
-    flexDirection:'row',
-    justifyContent: 'space-around'
+    alignItems: 'center'
   },
   button: {
     justifyContent: 'center',
+    marginTop: 20,
     borderRadius: 2,
     height: 30,
     width: 100,
@@ -90,4 +83,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DeckItem;
+export default DeckDetail;

@@ -8,6 +8,8 @@ import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import reducer from './reducers';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
+import DeckDetail from './components/DeckDetail';
+
 
 
 function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
@@ -57,15 +59,16 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
   },
-  // EntryDetail: {
-  //   screen: EntryDetail,
-  //   navigationOptions: {
-  //     headerTintColor: white,
-  //     headerStyle: {
-  //       backgroundColor: purple
-  //     }
-  //   }
-  // }
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: ({navigation}) => ({
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#16aacb'
+      },
+      title: `${navigation.state.params.deck.title}`,
+    })
+  }
 })
 
 class App extends Component {
