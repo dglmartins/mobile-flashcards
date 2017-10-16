@@ -17,6 +17,10 @@ class AddDeck extends Component {
     deckTitle: ''
   }
 
+  componentWillMount() {
+
+  }
+
   onAddDeck = () => {
     const { deckTitle } = this.state;
     if (deckTitle === '') {
@@ -25,6 +29,7 @@ class AddDeck extends Component {
     }
     if (this.props.decks[deckTitle]) {
       alert('Deck already exists! Please try a different name or edit/delete the existing deck');
+      this.setState({deckTitle: ''})
       return;
     }
     saveDeckAsyncStorage(deckTitle).then(() => {
@@ -32,6 +37,7 @@ class AddDeck extends Component {
       this.props.navigation.dispatch(NavigationActions.navigate({
         routeName: 'Decks'
       }))
+      this.setState({deckTitle: ''})
     });
   }
 
