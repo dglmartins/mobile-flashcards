@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation'
 import { getDecksAsyncStorage, clearDecksAsyncStorage, removeDeckAsyncStorage } from '../utils/api';
@@ -35,6 +35,7 @@ class DeckList extends Component {
   render() {
     const { decks } = this.props;
     return (
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
           {decks.length === 0
             ? (
@@ -55,6 +56,8 @@ class DeckList extends Component {
             )
           }
         </View>
+      </ScrollView>
+
     );
   }
 
@@ -62,6 +65,10 @@ class DeckList extends Component {
 
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
