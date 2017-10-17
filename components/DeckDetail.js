@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 
 const DeckDetail = (props) => {
+  const onNavigateToAddCard = (deck)  => {
+    props.navigation.dispatch(NavigationActions.navigate(
+      {
+        routeName: 'AddCard',
+        params: {deck}
+      },
+    ))
+  }
   const { deck } = props.navigation.state.params
   return (
 
@@ -15,7 +24,10 @@ const DeckDetail = (props) => {
         {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, {backgroundColor: '#006c84'}]}>
+        <TouchableOpacity
+          style={[styles.button, {backgroundColor: '#006c84'}]}
+          onPress={() => onNavigateToAddCard(deck)}
+        >
           <Text style={styles.buttonText}>
             Add Card
           </Text>

@@ -7,49 +7,51 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation'
-import { addDeck } from '../actions';
-import { saveDeckAsyncStorage } from '../utils/api';
+// import { NavigationActions } from 'react-navigation'
+// import { addDeck } from '../actions';
+// import { saveDeckAsyncStorage } from '../utils/api';
 
 
-class AddDeck extends Component {
+class AddCard extends Component {
   state = {
-    deckTitle: ''
+    question: '',
+    answer: ''
   }
 
-  onAddDeck = () => {
-    const { deckTitle } = this.state;
-    if (deckTitle === '') {
-      alert('Please insert a title');
+  onAddCard = () => {
+    const { question, answer } = this.state;
+    if (question === '' || answer === '') {
+      alert('Please insert both a question and answer');
       return;
     }
-    if (this.props.decks[deckTitle]) {
-      alert('Deck already exists! Please try a different name or edit/delete the existing deck');
-      this.setState({deckTitle: ''})
-      return;
-    }
-    saveDeckAsyncStorage(deckTitle).then(() => {
-      this.props.addDeck(deckTitle);
-      this.props.navigation.dispatch(NavigationActions.navigate({
-        routeName: 'Decks'
-      }))
-      this.setState({deckTitle: ''})
-    });
+    // saveDeckAsyncStorage(deckTitle).then(() => {
+    //   this.props.addDeck(deckTitle);
+    //   this.props.navigation.dispatch(NavigationActions.navigate({
+    //     routeName: 'Decks'
+    //   }))
+    //   this.setState({deckTitle: ''})
+    // });
   }
 
 
   render () {
     return (
         <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>What is the title of your new deck?</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              value={this.state.question}
+              onChangeText={(question) => this.setState({question})}
+              placeholder='Write question here'
+              underlineColorAndroid='#dedede'
+            />
           </View>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              value={this.state.deckTitle}
-              onChangeText={(deckTitle) => this.setState({deckTitle})}
-              placeholder='Deck Title'
+              value={this.state.answer}
+              onChangeText={(answer) => this.setState({answer})}
+              placeholder='Write answer here'
               underlineColorAndroid='#dedede'
             />
           </View>
@@ -71,15 +73,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 100
-  },
-  titleContainer: {
-    justifyContent: 'center',
-    paddingLeft: 25,
-    paddingRight: 25
-  },
-  titleText: {
-    fontSize: 35,
-    textAlign: 'center'
   },
   inputContainer: {
     alignSelf: 'stretch',
@@ -128,16 +121,10 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(decks) {
-  return {
-    decks
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addDeck: (data) => dispatch(addDeck(data)),
+//   };
+// }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addDeck: (data) => dispatch(addDeck(data)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
+export default connect()(AddCard);
