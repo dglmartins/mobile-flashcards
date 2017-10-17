@@ -7,7 +7,7 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-// import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 import { addCard } from '../actions';
 import { addCardAsyncStorage } from '../utils/api';
 
@@ -26,12 +26,9 @@ class AddCard extends Component {
     }
     const data = { question, answer };
     const { title } = this.props.navigation.state.params
-    console.log(this.props);
     addCardAsyncStorage(title, data).then(() => {
       this.props.addCard(title , data);
-      // this.props.navigation.dispatch(NavigationActions.navigate({
-      //   routeName: 'Decks'
-      // }))
+      this.props.navigation.goBack();
       this.setState({question: '', answer: ''})
     });
   }
