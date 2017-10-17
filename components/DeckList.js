@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
 
 });
 
-function mapStateToProps(decks) {
+function mapStateToProps({decks}) {
   return {
     decks: Object.keys(decks).map((title) => (
       decks[title]

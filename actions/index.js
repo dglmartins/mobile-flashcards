@@ -2,6 +2,8 @@ export const GET_ALL_DECKS = 'GET_ALL_DECKS';
 export const ADD_DECK = 'ADD_DECK';
 export const REMOVE_DECK = 'REMOVE_DECK';
 export const ADD_CARD = 'ADD_CARD';
+export const NEXT_QUESTION = 'NEXT_QUESTION';
+export const PREV_QUESTION = 'PREV_QUESTION';
 
 export function getAllDecks(decks) {
   return {
@@ -29,5 +31,17 @@ export function addCard(title, card) {
     type: ADD_CARD,
     title,
     card
+  }
+}
+
+export function nextQuestion() {
+  return {
+    type: NEXT_QUESTION
+  }
+}
+
+export function prevQuestion() {
+  return {
+    type: PREV_QUESTION
   }
 }

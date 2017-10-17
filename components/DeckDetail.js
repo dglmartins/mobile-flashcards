@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
 });
 
-function mapStateToProps(decks, { navigation }) {
+function mapStateToProps({ decks }, { navigation }) {
   return {
     deck: Object.keys(decks).map((title) => (
       decks[title]
