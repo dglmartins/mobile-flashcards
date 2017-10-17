@@ -16,11 +16,26 @@ export function saveDeckAsyncStorage(title) {
   }))
 }
 
-export function removeDeckAsyncStorage (key) {
+export function removeDeckAsyncStorage (deck) {
   return AsyncStorage.getItem(FLASHCARDS_DECK_STORAGE_KEY)
     .then((results) => {
       const data = JSON.parse(results)
-      delete data[key]
+      delete data[deck]
       AsyncStorage.setItem(FLASHCARDS_DECK_STORAGE_KEY, JSON.stringify(data))
+    })
+}
+
+export function addCardAsyncStorage (title, card) {
+  return AsyncStorage.getItem(FLASHCARDS_DECK_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      const newData = {
+        ...data,
+        [title]: {
+          ...data[title],
+          questions: data[title].questions.concat(card)
+        }
+      }
+      AsyncStorage.setItem(FLASHCARDS_DECK_STORAGE_KEY, JSON.stringify(newData))
     })
 }

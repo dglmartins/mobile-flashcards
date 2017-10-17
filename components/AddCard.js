@@ -8,8 +8,8 @@ import { StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
 // import { NavigationActions } from 'react-navigation'
-// import { addDeck } from '../actions';
-// import { saveDeckAsyncStorage } from '../utils/api';
+import { addCard } from '../actions';
+import { addCardAsyncStorage } from '../utils/api';
 
 
 class AddCard extends Component {
@@ -24,13 +24,16 @@ class AddCard extends Component {
       alert('Please insert both a question and answer');
       return;
     }
-    // saveDeckAsyncStorage(deckTitle).then(() => {
-    //   this.props.addDeck(deckTitle);
-    //   this.props.navigation.dispatch(NavigationActions.navigate({
-    //     routeName: 'Decks'
-    //   }))
-    //   this.setState({deckTitle: ''})
-    // });
+    const data = { question, answer };
+    const { title } = this.props.navigation.state.params
+    console.log(this.props);
+    addCardAsyncStorage(title, data).then(() => {
+      this.props.addCard(title , data);
+      // this.props.navigation.dispatch(NavigationActions.navigate({
+      //   routeName: 'Decks'
+      // }))
+      this.setState({question: '', answer: ''})
+    });
   }
 
 
@@ -56,7 +59,7 @@ class AddCard extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={this.onAddDeck}>
+            <TouchableOpacity style={styles.button} onPress={this.onAddCard}>
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -121,10 +124,10 @@ const styles = StyleSheet.create({
   }
 });
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addDeck: (data) => dispatch(addDeck(data)),
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    addCard: (data) => dispatch(addCard(data)),
+  };
+}
 
-export default connect()(AddCard);
+export default connect(null, mapDispatchToProps)(AddCard);

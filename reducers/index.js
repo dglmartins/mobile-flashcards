@@ -1,7 +1,8 @@
 import {
   ADD_DECK,
   GET_ALL_DECKS,
-  REMOVE_DECK
+  REMOVE_DECK,
+  ADD_CARD
 } from '../actions';
 import R from 'ramda';
 
@@ -31,7 +32,7 @@ const initialState = {
 }
 
 function reducer (state = {}, action) {
-  const { title, decks } = action;
+  const { title, decks, card } = action;
   switch (action.type) {
     case GET_ALL_DECKS:
       return decks;
@@ -41,6 +42,15 @@ function reducer (state = {}, action) {
       return {
         ...state,
         [title]: { title, questions: [] }
+      };
+    case ADD_CARD:
+    console.log("I get here")
+      return {
+        ...state,
+        [title]: {
+          ...state[title],
+          questions: state[title].questions.concat(card)
+        }
       };
     default:
       return state;

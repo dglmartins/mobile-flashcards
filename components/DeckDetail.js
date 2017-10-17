@@ -1,45 +1,50 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+
 
 const DeckDetail = (props) => {
   const onNavigateToAddCard = (deck)  => {
     props.navigation.dispatch(NavigationActions.navigate(
       {
         routeName: 'AddCard',
-        params: {deck}
+        params: {title: deck.title}
       },
     ))
   }
-  const { deck } = props.navigation.state.params
   return (
 
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>
-          {deck.title}
-        </Text>
-      </View>
-      <Text style={styles.cardCount}>
-        {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
-      </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#006c84'}]}
-          onPress={() => onNavigateToAddCard(deck)}
-        >
-          <Text style={styles.buttonText}>
-            Add Card
+      {props.deck && (
+        <View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>
+              {props.deck.title}
+            </Text>
+          </View>
+          <Text style={styles.cardCount}>
+            {props.deck.questions.length} {props.deck.questions.length === 1 ? 'card' : 'cards'}
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#16aacb'}]}
-        >
-          <Text style={styles.buttonText}>
-            Start Quiz
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: '#006c84'}]}
+              onPress={() => onNavigateToAddCard(props.deck)}
+            >
+              <Text style={styles.buttonText}>
+                Add Card
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: '#16aacb'}]}
+            >
+              <Text style={styles.buttonText}>
+                Start Quiz
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -95,4 +100,12 @@ const styles = StyleSheet.create({
 
 });
 
-export default DeckDetail;
+function mapStateToProps(decks, { navigation }) {
+  return {
+    deck: Object.keys(decks).map((title) => (
+      decks[title]
+    )).filter((deck) => (deck.title === navigation.state.params.deck.title))[0]
+  };
+}
+
+export default connect(mapStateToProps)(DeckDetail);
