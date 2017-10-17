@@ -16,7 +16,7 @@ const DeckItem = (props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, {backgroundColor: '#16aacb'}]}
-          onPress={() => onNavigateToDeck(deck)}
+          onPress={() => onNavigateToDeck(deck.title)}
         >
           <Text style={styles.buttonText}>
             See Deck

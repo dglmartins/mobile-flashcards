@@ -70,7 +70,7 @@ const MainNavigator = StackNavigator({
       headerStyle: {
         backgroundColor: '#16aacb'
       },
-      title: `${navigation.state.params.deck.title}`,
+      title: `${navigation.state.params.title}`,
     })
   },
   AddCard: {

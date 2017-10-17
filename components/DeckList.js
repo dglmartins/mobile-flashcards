@@ -23,11 +23,11 @@ class DeckList extends Component {
     });
   }
 
-  onNavigateToDeck = (deck)  => {
+  onNavigateToDeck = (title)  => {
     this.props.navigation.dispatch(NavigationActions.navigate(
       {
         routeName: 'DeckDetail',
-        params: {deck}
+        params: {title}
       },
     ))
   }

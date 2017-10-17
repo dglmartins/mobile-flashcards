@@ -5,11 +5,11 @@ import { NavigationActions } from 'react-navigation';
 
 
 const DeckDetail = (props) => {
-  const onNavigateToAddCard = (deck)  => {
+  const onNavigateToAddCard = (title)  => {
     props.navigation.dispatch(NavigationActions.navigate(
       {
         routeName: 'AddCard',
-        params: {title: deck.title}
+        params: {title}
       },
     ))
   }
@@ -29,7 +29,7 @@ const DeckDetail = (props) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, {backgroundColor: '#006c84'}]}
-              onPress={() => onNavigateToAddCard(props.deck)}
+              onPress={() => onNavigateToAddCard(props.deck.title)}
             >
               <Text style={styles.buttonText}>
                 Add Card
@@ -104,7 +104,7 @@ function mapStateToProps({ decks }, { navigation }) {
   return {
     deck: Object.keys(decks).map((title) => (
       decks[title]
-    )).filter((deck) => (deck.title === navigation.state.params.deck.title))[0]
+    )).filter((deck) => (deck.title === navigation.state.params.title))[0]
   };
 }
 
