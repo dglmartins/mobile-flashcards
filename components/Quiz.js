@@ -78,39 +78,42 @@ class Quiz extends Component {
           )
           : (
             <View style={styles.container}>
-
-              <View style={styles.progressContainer}>
-                <Text>
-                  {this.state.questionNumber} / {this.props.deck.questions.length}
-                </Text>
-              </View>
-              <View style={styles.questionContainer}>
-                {this.state.showingAnswer
-                  ? <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].answer}</Text>
-                  : <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].question}</Text>
-                }
-              </View>
-              <View style={styles.toggleQAContainer}>
-                <TouchableOpacity onPress={this.toggleAnswer}>
-                  <Text>
+              {this.props.deck && (
+                <View>
+                  <View style={styles.progressContainer}>
+                    <Text>
+                      {this.state.questionNumber} / {this.props.deck.questions.length}
+                    </Text>
+                  </View>
+                  <View style={styles.questionContainer}>
                     {this.state.showingAnswer
-                      ? "Show question"
-                      : "Show answer"
+                      ? <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].answer}</Text>
+                      : <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].question}</Text>
                     }
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText} onPress={this.markCorrect}>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, {backgroundColor: "#ea7a87"}]}
-                  onPress={this.markIncorrect}
-                >
-                  <Text style={styles.buttonText}>Incorrect</Text>
-                </TouchableOpacity>
-              </View>
+                  </View>
+                  <View style={styles.toggleQAContainer}>
+                    <TouchableOpacity onPress={this.toggleAnswer}>
+                      <Text>
+                        {this.state.showingAnswer
+                          ? "Show question"
+                          : "Show answer"
+                        }
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button}>
+                      <Text style={styles.buttonText} onPress={this.markCorrect}>Correct</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, {backgroundColor: "#ea7a87"}]}
+                      onPress={this.markIncorrect}
+                    >
+                      <Text style={styles.buttonText}>Incorrect</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             </View>
           )
         )
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'flex-start',
     paddingTop: 15
 
@@ -136,16 +139,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   questionContainer: {
+    alignSelf: 'stretch',
     justifyContent: 'center',
     marginTop: 25,
-    paddingLeft: 25,
-    paddingRight: 25
   },
   questionText: {
     fontSize: 25,
     textAlign: 'center'
   },
   toggleQAContainer: {
+    alignSelf: 'center',
     marginTop: 30,
     marginRight: 15,
     marginLeft: 15,
@@ -161,6 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
+    alignSelf: 'center',
     backgroundColor: '#16aacb',
     justifyContent: 'center',
     borderRadius: 2,
@@ -194,16 +198,12 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ decks }) {
+function mapStateToProps({ decks }, { navigation }) {
   return {
-    decks
+    deck: Object.keys(decks).map((title) => (
+      decks[title]
+    )).filter((deck) => (deck.title === navigation.state.params.title))[0]
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addDeck: (data) => dispatch(addDeck(data)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export default connect(mapStateToProps)(Quiz);

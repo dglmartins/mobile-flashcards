@@ -13,6 +13,19 @@ const DeckDetail = (props) => {
       },
     ))
   }
+
+  const onNavigateToQuiz = (title)  => {
+    if (props.deck.questions.length === 0) {
+      alert("Add at least one card to take Quiz")
+      return
+    }
+    props.navigation.dispatch(NavigationActions.navigate(
+      {
+        routeName: 'Quiz',
+        params: {title}
+      },
+    ))
+  }
   return (
 
     <View style={styles.container}>
@@ -37,6 +50,7 @@ const DeckDetail = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, {backgroundColor: '#16aacb'}]}
+              onPress={() => onNavigateToQuiz(props.deck.title)}
             >
               <Text style={styles.buttonText}>
                 Start Quiz

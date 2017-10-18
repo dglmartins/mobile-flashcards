@@ -76,13 +76,23 @@ const MainNavigator = StackNavigator({
   },
   AddCard: {
     screen: AddCard,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: '#16aacb'
       },
       title: "Add Card",
-    })
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#16aacb'
+      },
+      title: "Quiz",
+    }
   }
 })
 
@@ -93,8 +103,7 @@ class App extends Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <MobileFlashCardStatusBar backgroundColor={'#006c84'} barStyle='light-content'/>
-          {/* <MainNavigator/> */}
-          <Quiz deck={{questions: [{question: "Hello askjhkjdakjhas ajshkjhads kjhaskjhdas kjhakjdas", answer: "yes"}, {question: "Hello", answer: "yes"}, {question: "Hello", answer: "yes"}]}}/>
+          <MainNavigator/>
         </View>
       </Provider>
     );
