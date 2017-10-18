@@ -10,6 +10,7 @@ import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 
 
 
@@ -92,7 +93,8 @@ class App extends Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <MobileFlashCardStatusBar backgroundColor={'#006c84'} barStyle='light-content'/>
-          <MainNavigator/>
+          {/* <MainNavigator/> */}
+          <Quiz deck={{questions: [{question: "Hello askjhkjdakjhas ajshkjhads kjhaskjhdas kjhakjdas", answer: "yes"}, {question: "Hello", answer: "yes"}, {question: "Hello", answer: "yes"}]}}/>
         </View>
       </Provider>
     );

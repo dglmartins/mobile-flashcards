@@ -23,7 +23,7 @@ const DeckItem = (props) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, {backgroundColor: 'red'}]}
+          style={[styles.button, {backgroundColor: "#ea7a87"}]}
           onPress={() => onDeleteDeck(deck.title)}
         >
           <Text style={styles.buttonText}>

@@ -53,6 +53,7 @@ class AddCard extends Component {
               onChangeText={(answer) => this.setState({answer})}
               placeholder='Write answer here'
               underlineColorAndroid='#dedede'
+              multiLine={true}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Platform.OS === 'ios' ? '#dedede' : 'white',
     marginLeft: 10,
     marginRight: 10,
+    fontSize: 10
   },
   buttonContainer: {
     marginTop: 30,
