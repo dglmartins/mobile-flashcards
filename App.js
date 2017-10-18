@@ -6,11 +6,11 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import reducer from './reducers';
-import DeckList from './components/DeckList';
-import AddDeck from './components/AddDeck';
-import DeckDetail from './components/DeckDetail';
-import AddCard from './components/AddCard';
-import Quiz from './components/Quiz';
+import DeckList from './features/DeckList';
+import AddDeck from './features/AddDeck';
+import DeckDetail from './features/DeckDetail';
+import AddCard from './features/AddCard';
+import Quiz from './features/Quiz';
 
 
 
