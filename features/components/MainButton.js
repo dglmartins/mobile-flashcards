@@ -5,7 +5,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-const QuizButton =(props) => (
+const MainButton =(props) => (
     <TouchableOpacity
       style={[styles.button, props.extraStyle]}
       onPress={props.handlePress}
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuizButton;
+export default MainButton;

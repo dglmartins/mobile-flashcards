@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import MainButton from '../components/MainButton';
 
 const DeckItem = (props) => {
   const { deck, onDeleteDeck, onNavigateToDeck } = props;
@@ -14,22 +15,15 @@ const DeckItem = (props) => {
         {deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#16aacb'}]}
-          onPress={() => onNavigateToDeck(deck.title)}
-        >
-          <Text style={styles.buttonText}>
-            See Deck
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: "#ea7a87"}]}
-          onPress={() => onDeleteDeck(deck.title)}
-        >
-          <Text style={styles.buttonText}>
-            Delete Deck
-          </Text>
-        </TouchableOpacity>
+        <MainButton
+          handlePress={() => onNavigateToDeck(deck.title)}
+          buttonText="See Deck"
+        />
+        <MainButton
+          handlePress={() => onDeleteDeck(deck.title)}
+          buttonText="Delete Deck"
+          extraStyle={{backgroundColor: "#ea7a87"}}
+        />
       </View>
     </View>
   );
@@ -69,25 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection:'row',
     justifyContent: 'space-around'
-  },
-  button: {
-    justifyContent: 'center',
-    borderRadius: 2,
-    height: 30,
-    width: 100,
-    shadowOpacity: 1,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    elevation: 1
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white'
   }
-
 });
 
 export default DeckItem;

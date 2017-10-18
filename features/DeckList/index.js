@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation'
-import { getDecksAsyncStorage, clearDecksAsyncStorage, removeDeckAsyncStorage } from '../utils/api';
-import { getAllDecks, removeDeck, addDeck } from '../actions';
+import { getDecksAsyncStorage, clearDecksAsyncStorage, removeDeckAsyncStorage } from '../../utils/api';
+import { getAllDecks, removeDeck, addDeck } from '../../actions';
 import DeckItem from './DeckItem';
+import { Alert } from 'react-native';
 
 class DeckList extends Component {
   componentDidMount() {
@@ -18,9 +19,16 @@ class DeckList extends Component {
   }
 
   onDeleteDeck = (title) => {
-    removeDeckAsyncStorage(title).then(() => {
-      this.props.removeDeck(title)
-    });
+    Alert.alert(
+      'Confirm delete',
+      'Are you sure you want to delete?!',
+      [
+        { text: 'Confirm', onPress: () => removeDeckAsyncStorage(title).then(() => {
+          this.props.removeDeck(title)
+        })},
+        { text: 'Cancel', onPress: () => console.log('canceled')}
+      ]
+    )
   }
 
   onNavigateToDeck = (title)  => {

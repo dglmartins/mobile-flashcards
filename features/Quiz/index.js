@@ -10,8 +10,7 @@ import QuizResults from './components/QuizResults';
 import QuizProgress from './components/QuizProgress';
 import QACard from './components/QACard';
 import ToggleAnswerButton from './components/ToggleAnswerButton';
-import QuizButton from './components/QuizButton';
-
+import MainButton from '../components/MainButton';
 
 class Quiz extends Component {
 
@@ -87,12 +86,11 @@ class Quiz extends Component {
                     handlePress={this.toggleAnswer}
                   />
                   <View style={styles.buttonContainer}>
-                    <QuizButton
+                    <MainButton
                       handlePress={this.markCorrect}
                       buttonText="Correct"
-                      extraStyle={{}}
                     />
-                    <QuizButton
+                    <MainButton
                       handlePress={this.markIncorrect}
                       buttonText="Incorrect"
                       extraStyle={{backgroundColor: "#ea7a87"}}

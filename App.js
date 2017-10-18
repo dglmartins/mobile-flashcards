@@ -12,8 +12,6 @@ import DeckDetail from './features/DeckDetail';
 import AddCard from './features/AddCard';
 import Quiz from './features/Quiz';
 
-
-
 function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight}}>

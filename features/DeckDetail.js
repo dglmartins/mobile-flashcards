@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import MainButton from './components/MainButton';
 
 
 const DeckDetail = (props) => {
@@ -40,22 +41,15 @@ const DeckDetail = (props) => {
             {props.deck.questions.length} {props.deck.questions.length === 1 ? 'card' : 'cards'}
           </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, {backgroundColor: '#006c84'}]}
-              onPress={() => onNavigateToAddCard(props.deck.title)}
-            >
-              <Text style={styles.buttonText}>
-                Add Card
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, {backgroundColor: '#16aacb'}]}
-              onPress={() => onNavigateToQuiz(props.deck.title)}
-            >
-              <Text style={styles.buttonText}>
-                Start Quiz
-              </Text>
-            </TouchableOpacity>
+            <MainButton
+              handlePress={() => onNavigateToAddCard(props.deck.title)}
+              extraStyle={{backgroundColor: '#006c84'}}
+              buttonText="Add Card"
+            />
+            <MainButton
+              handlePress={() => onNavigateToQuiz(props.deck.title)}
+              buttonText="Start Quiz"
+            />
           </View>
         </View>
       )}
@@ -71,12 +65,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     height: 50,
-    // borderBottomWidth: 1,
-    // borderBottomColor: 'gray',
-    // alignSelf: 'stretch',
-    // marginLeft: 20,
-    // marginRight: 20,
-    // justifyContent: 'center'
 
   },
   titleText: {
@@ -92,26 +80,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 30,
     alignItems: 'center'
-  },
-  button: {
-    justifyContent: 'center',
-    marginTop: 20,
-    borderRadius: 2,
-    height: 30,
-    width: 100,
-    shadowOpacity: 1,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    elevation: 1
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white'
   }
-
 });
 
 function mapStateToProps({ decks }, { navigation }) {

@@ -4,13 +4,13 @@ import { StyleSheet,
   View,
   TouchableOpacity
 } from 'react-native';
-import QuizButton from './QuizButton';
+import MainButton from '../../components/MainButton';
 
 const QuizResults =(props) => (
   <View>
     <Text style={styles.finishedText}>Finished! You're score was:</Text>
     <Text style={styles.scoreText}> {Math.round(100*props.rightAnswerCount/props.questionCount)}%</Text>
-    <QuizButton handlePress={props.handlePress} buttonText="Restart"/>
+    <MainButton handlePress={props.handlePress} buttonText="Restart"/>
   </View>
 );
 
