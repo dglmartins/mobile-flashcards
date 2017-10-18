@@ -7,69 +7,61 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-// import { NavigationActions } from 'react-navigation'
-// import { addDeck } from '../actions';
-// import { saveDeckAsyncStorage } from '../utils/api';
+import { nextQuestion, resetQuiz, finishQuiz, markCorrect, toggleAnswer } from '../actions'
 
 
 class Quiz extends Component {
-  state = {
-    questionNumber: 1,
-    showingAnswer: false,
-    rightAnswerCount: 0,
-    quizFinished: false
+  
+  componentWillMount() {
+    this.props.resetQuiz()
   }
 
   markCorrect = () => {
-    if (this.state.questionNumber === this.props.deck.questions.length) {
-      this.setState((state) => ({
-        quizFinished: true,
-        rightAnswerCount: state.rightAnswerCount + 1
-      }))
+    if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
+
+      this.props.markCorrect();
+      this.props.finishQuiz();
+
       return
     }
-    this.setState((state) => ({
-      rightAnswerCount: state.rightAnswerCount + 1,
-      questionNumber: state.questionNumber + 1
-    }))
+
+    this.props.toggleAnswer(false);
+    this.props.markCorrect();
+    this.props.nextQuestion();
+
   }
 
   markIncorrect = () => {
-    if (this.state.questionNumber === this.props.deck.questions.length) {
-      this.setState((state) => ({
-        quizFinished: true,
-      }))
+    if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
+      this.props.finishQuiz();
+
       return
     }
-    this.setState((state) => ({
-      questionNumber: state.questionNumber + 1
-    }))
+    this.props.toggleAnswer(false);
+    this.props.nextQuestion();
+
   }
 
   restart = () => {
-    this.setState({
-      questionNumber: 1,
-      showingAnswer: false,
-      rightAnswerCount: 0,
-      quizFinished: false
-    })
+    this.props.resetQuiz()
+
   }
 
   toggleAnswer = () => {
-    this.state.showingAnswer
-      ? this.setState({ showingAnswer: false })
-      : this.setState({ showingAnswer: true })
+    this.props.quizControl.showingAnswer
+      ? this.props.toggleAnswer(false)
+      : this.props.toggleAnswer(true)
   }
 
 
   render () {
     return (
-        (this.state.quizFinished
+        (this.props.quizControl.quizFinished
           ? (
             <View style={styles.container}>
               <View>
                 <Text style={styles.finishedText}>Finished! You're score was:</Text>
-                <Text style={styles.scoreText}> {Math.round(100*this.state.rightAnswerCount/this.props.deck.questions.length)}%</Text>
+                <Text style={styles.scoreText}> {Math.round(100*this.props.quizControl.rightAnswerCount/this.props.deck.questions.length)}%</Text>
               </View>
               <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText} onPress={this.restart}>Restart</Text>
@@ -82,19 +74,19 @@ class Quiz extends Component {
                 <View>
                   <View style={styles.progressContainer}>
                     <Text>
-                      {this.state.questionNumber} / {this.props.deck.questions.length}
+                      {this.props.quizControl.questionNumber} / {this.props.deck.questions.length}
                     </Text>
                   </View>
                   <View style={styles.questionContainer}>
-                    {this.state.showingAnswer
-                      ? <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].answer}</Text>
-                      : <Text style={styles.questionText}>{this.props.deck.questions[this.state.questionNumber - 1].question}</Text>
+                    {this.props.quizControl.showingAnswer
+                      ? <Text style={styles.questionText}>{this.props.deck.questions[this.props.quizControl.questionNumber - 1].answer}</Text>
+                      : <Text style={styles.questionText}>{this.props.deck.questions[this.props.quizControl.questionNumber - 1].question}</Text>
                     }
                   </View>
                   <View style={styles.toggleQAContainer}>
                     <TouchableOpacity onPress={this.toggleAnswer}>
                       <Text>
-                        {this.state.showingAnswer
+                        {this.props.quizControl.showingAnswer
                           ? "Show question"
                           : "Show answer"
                         }
@@ -198,12 +190,23 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ decks }, { navigation }) {
+function mapStateToProps({ decks, quizControl }, { navigation }) {
   return {
     deck: Object.keys(decks).map((title) => (
       decks[title]
-    )).filter((deck) => (deck.title === navigation.state.params.title))[0]
+    )).filter((deck) => (deck.title === navigation.state.params.title))[0],
+    quizControl
   };
 }
 
-export default connect(mapStateToProps)(Quiz);
+function mapDispatchToProps(dispatch) {
+  return {
+    nextQuestion: () => dispatch(nextQuestion()),
+    resetQuiz: () => dispatch(resetQuiz()),
+    finishQuiz: () => dispatch(finishQuiz()),
+    markCorrect: () => dispatch(markCorrect()),
+    toggleAnswer: (data) => dispatch(toggleAnswer(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

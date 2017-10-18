@@ -24,10 +24,10 @@ class AddCard extends Component {
       alert('Please insert both a question and answer');
       return;
     }
-    const data = { question, answer };
+    const card = { question, answer };
     const { title } = this.props.navigation.state.params
-    addCardAsyncStorage(title, data).then(() => {
-      this.props.addCard(title , data);
+    addCardAsyncStorage(title, card).then(() => {
+      this.props.addCard({title, card});
       this.props.navigation.goBack();
       this.setState({question: '', answer: ''})
     });
