@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MainButton from '../components/MainButton';
 
+//Stateless functional component renders the title of the deck, the card count, a button to see the deck, a button to delete the deck. Uses MainButton component
 const DeckItem = (props) => {
   const { deck, onDeleteDeck, onNavigateToDeck } = props;
   return (

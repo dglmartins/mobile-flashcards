@@ -4,6 +4,7 @@ import { StyleSheet,
   View,
 } from 'react-native';
 
+//Stateless functional component, renders at the left corner of screen, the number of the question out of how many questions
 const QuizProgress =(props) => (
   <View style={styles.progressContainer}>
     <Text style={styles.progressText}>

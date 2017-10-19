@@ -12,6 +12,7 @@ import QuizProgress from './components/QuizProgress';
 import ToggleAnswerButton from './components/ToggleAnswerButton';
 import MainButton from '../components/MainButton';
 
+//Class compoenent to reset quiz control on redux on componentWillMount, and to keep state of animation.
 class Quiz extends Component {
 
   state = {
@@ -19,22 +20,24 @@ class Quiz extends Component {
     animationFinished: true
   }
 
+  //dispatches action to reset quizControl reducer to initialState
   componentWillMount() {
     this.props.resetQuiz()
   }
 
+  //Adds to correct score on redux, checks if quiz finished. if not hides the next answer and moves to next question.
   markCorrect = () => {
+    this.props.markCorrect();
     if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
-      this.props.markCorrect();
       this.props.finishQuiz();
       return
     }
     this.props.toggleAnswer(false);
-    this.props.markCorrect();
     this.props.nextQuestion();
 
   }
 
+  //checks if quiz finished. if not hides the next answer and moves to next question.
   markIncorrect = () => {
     if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
       this.props.finishQuiz();
@@ -45,10 +48,12 @@ class Quiz extends Component {
 
   }
 
+  //allows restart of quiz by dispatching resetQuiz action to quizControl reducer
   restart = () => {
     this.props.resetQuiz()
   }
 
+  //function to handle a turning of card animation. Saves whether the animation is finished in state, so buttons are not rendered while animation is active to avoid bugs.
   animateCard = (value) => {
     this.setState({ animationFinished: false});
       Animated.timing(
@@ -61,6 +66,7 @@ class Quiz extends Component {
     setTimeout(() => this.setState({ animationFinished: true }), 300);
   }
 
+  // allows the user to flip the card over to see the answer.
   toggleAnswer = () => {
     if (this.props.quizControl.showingAnswer) {
       this.props.toggleAnswer(false);
@@ -71,8 +77,10 @@ class Quiz extends Component {
     }
   }
 
-
+  //renders the quiz result OR the quiz, depending on whether quiz is finised
   render () {
+
+    //interpolates the animation for rotateX transform
     const rotateX = this.state.cardRotateAnim.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '180deg']
@@ -85,6 +93,7 @@ class Quiz extends Component {
     return (
         (quizFinished
           ? (
+            //renders QuizResults component if finished
             <View style={styles.container}>
               <QuizResults
                 rightAnswerCount={rightAnswerCount}
@@ -94,6 +103,7 @@ class Quiz extends Component {
             </View>
           )
           : (
+            //renders the Quiz if not finished. This is composed of a QuizProgress component, and Animated View and Text component, to animate the card and answer/question views, a button to mark correct and a button to mark Incorrect
             <View style={styles.container}>
               {this.props.deck && (
                 <View>

@@ -12,7 +12,8 @@ import DeckDetail from './features/DeckDetail';
 import AddCard from './features/AddCard';
 import Quiz from './features/Quiz';
 
-function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
+//Status Bar component using Constants.statusBarHeight
+const MobileFlashCardStatusBar = ({ backgroundColor, ...props }) => {
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight}}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
@@ -20,6 +21,7 @@ function MobileFlashCardStatusBar ({ backgroundColor, ...props }) {
   );
 }
 
+//Tab Navigator will navigate between viewing Decks and Adding a new Deck
 const Tabs = TabNavigator({
   Decks: {
     screen: DeckList,
@@ -39,6 +41,7 @@ const Tabs = TabNavigator({
   navigationOptions: {
     header: null
   },
+  //Different styles for Android or IOS
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? '#16aacb' : 'white',
     style: {
@@ -55,6 +58,7 @@ const Tabs = TabNavigator({
   }
 })
 
+//Main navigator a stack navigator of which Home is the TabNavigator above
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
@@ -98,6 +102,7 @@ const MainNavigator = StackNavigator({
   }
 })
 
+//App renders Status Bar and MainNavigator, making the first page of the app DeckList
 class App extends Component {
 
   render() {
@@ -119,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App
+export default App;

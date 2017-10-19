@@ -5,6 +5,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+//Stateless functional MainButton component used every time there is the common Main button in the app. Can receive extra styles, such as rendering it with a different backgroundColor
 const MainButton =(props) => (
     <TouchableOpacity
       style={[styles.button, props.extraStyle]}

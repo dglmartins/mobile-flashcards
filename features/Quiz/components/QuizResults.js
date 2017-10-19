@@ -6,6 +6,7 @@ import { StyleSheet,
 } from 'react-native';
 import MainButton from '../../components/MainButton';
 
+//Stateless functional component, renders a finished message with a score in rounded percentage
 const QuizResults =(props) => (
   <View>
     <Text style={styles.finishedText}>Finished! You're score was:</Text>

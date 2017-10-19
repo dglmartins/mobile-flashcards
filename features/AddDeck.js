@@ -13,12 +13,13 @@ import { saveDeckAsyncStorage } from '../utils/api';
 import MainButton from './components/MainButton';
 import InputField from './components/InputField';
 
-
+// Class component for managing state of its own decktTitle field. 
 class AddDeck extends Component {
   state = {
     deckTitle: ''
   }
 
+  //checks if the field is not empty, checks if the title already exists, if not saves to AsyncStorage, dispatches to Redux, navigates to Decks, clears deckTitle state.
   onAddDeck = () => {
     const { deckTitle } = this.state;
     if (deckTitle === '') {
@@ -39,11 +40,12 @@ class AddDeck extends Component {
     });
   }
 
+  //handes change of deckTitle input
   changeTitleInput = (deckTitle) => {
     this.setState({ deckTitle });
   }
 
-
+  //renders an instruction to input title, an input field and a button to submit.
   render () {
     return (
         <View style={styles.container}>

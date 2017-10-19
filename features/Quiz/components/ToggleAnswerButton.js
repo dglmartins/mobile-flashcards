@@ -5,6 +5,7 @@ import { StyleSheet,
   TouchableOpacity
 } from 'react-native';
 
+//Stateless functional component, renders a white button to toggle between answer and question
 const ToggleAnswerButton =(props) => (
   <View style={styles.toggleQAContainer}>
     <TouchableOpacity onPress={props.handlePress}>

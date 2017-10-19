@@ -7,17 +7,19 @@ import { getAllDecks, removeDeck, addDeck } from '../../actions';
 import DeckItem from './DeckItem';
 import { Alert } from 'react-native';
 
+// Class component for using componentDidMount
 class DeckList extends Component {
+
+  //ComponentDidMount gets Decks from AsyncStorage then updates Redux if not empty
   componentDidMount() {
       getDecksAsyncStorage().then((results) => {
-        if (results === null) {
-          this.props.getAllDecks({});
-        } else {
+        if (results !== null) {
           this.props.getAllDecks(JSON.parse(results));
         }
       })
   }
 
+  //onDeleteDeck alerts that a deck will be deleted, if confirmed, deletes from AsyncStorage then dispatches to Redux
   onDeleteDeck = (title) => {
     Alert.alert(
       'Confirm delete',
@@ -31,6 +33,7 @@ class DeckList extends Component {
     )
   }
 
+  //onNavigateToDeck renders DeckDetail route, which renders the DeckDetail component, passes the title of the deck to DeckDetail.
   onNavigateToDeck = (title)  => {
     this.props.navigation.dispatch(NavigationActions.navigate(
       {
@@ -40,6 +43,7 @@ class DeckList extends Component {
     ))
   }
 
+  //Renders in a Scrollview, a title to add a Deck and each DeckItem to break down this component and make it more readable.
   render() {
     const { decks } = this.props;
     return (
@@ -56,7 +60,8 @@ class DeckList extends Component {
             : (
               decks.map((deck) => (
                 <DeckItem
-                  deck={deck} onDeleteDeck={this.onDeleteDeck}
+                  deck={deck}
+                  onDeleteDeck={this.onDeleteDeck}
                   key={deck.title}
                   onNavigateToDeck={this.onNavigateToDeck}
                 />

@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import MainButton from './components/MainButton';
 
-
+//Stateless functional component, called via route by a button on DeckList.
 const DeckDetail = (props) => {
+
+  //Navigates to AddCard, passing title as a param
   const onNavigateToAddCard = (title)  => {
     props.navigation.dispatch(NavigationActions.navigate(
       {
@@ -15,6 +17,7 @@ const DeckDetail = (props) => {
     ))
   }
 
+  //Navigates to Quiz, passing title as a param. Does a check to see if there is at least one card, or else, no Quiz
   const onNavigateToQuiz = (title)  => {
     if (props.deck.questions.length === 0) {
       alert("Add at least one card to take Quiz")
@@ -27,8 +30,9 @@ const DeckDetail = (props) => {
       },
     ))
   }
-  return (
 
+  //renders the title of the deck, its current card count, a button to navigate to AddCard, a button to navigate to Quiz.
+  return (
     <View style={styles.container}>
       {props.deck && (
         <View>
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
   }
 });
 
+//With the title received as navigation param and redux decks, maps the deck to prop
 function mapStateToProps({ decks }, { navigation }) {
   return {
     deck: Object.keys(decks).map((title) => (

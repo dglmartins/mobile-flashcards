@@ -9,6 +9,7 @@ export const FINISH_QUIZ = 'FINISH_QUIZ';
 export const MARK_CORRECT = 'MARK_CORRECT';
 export const TOGGLE_ANSWER = 'TOGGLE_ANSWER';
 
+//Decks Actions
 export function getAllDecks(decks) {
   return {
     type: GET_ALL_DECKS,
@@ -38,6 +39,7 @@ export function addCard({title, card}) {
   }
 }
 
+//QuizControl actions
 export function nextQuestion() {
   return {
     type: NEXT_QUESTION

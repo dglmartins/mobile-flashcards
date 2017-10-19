@@ -5,6 +5,7 @@ import { StyleSheet,
   Platform
 } from 'react-native';
 
+//Stateless functional component reused every time there is an Input field.
 const InputField =(props) => (
   <View style={styles.inputContainer}>
     <TextInput

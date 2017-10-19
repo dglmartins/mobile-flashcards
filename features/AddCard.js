@@ -12,13 +12,14 @@ import { addCardAsyncStorage } from '../utils/api';
 import MainButton from './components/MainButton';
 import InputField from './components/InputField';
 
-
+//Class component for managing state of question and answer inputs. 
 class AddCard extends Component {
   state = {
     question: '',
     answer: ''
   }
 
+  //checks if either field is empty, if saves card on AsyncStorage then dispatches to redux, goes back in navigation, and clears the state of inputs.
   onAddCard = () => {
     const { question, answer } = this.state;
     if (question === '' || answer === '') {
@@ -34,14 +35,17 @@ class AddCard extends Component {
     });
   }
 
+  //handles onChangeText of question field
   changeQuestionInput = (question) => {
     this.setState({ question })
   }
 
+  //handles onChangeText of answer field
   changeAnswerInput = (answer) => {
     this.setState({ answer })
   }
 
+  //renders an instruction to add question and answer, two input fields for question and answer and a submit button.
   render () {
     return (
         <View style={styles.container}>
