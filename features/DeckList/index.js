@@ -84,27 +84,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 10
   },
-  deckInfo: {
-    height: 125,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    alignSelf: 'stretch',
-    marginLeft: 20,
-    marginRight: 20,
-    justifyContent: 'center'
-
-  },
-  titleText: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  cardCount: {
-    textAlign: 'center',
-    fontSize: 12,
-    color: 'grey',
-    paddingTop: 5
-  },
   noDeckContainer: {
     flex: 1,
     justifyContent: 'center'
@@ -112,28 +91,6 @@ const styles = StyleSheet.create({
   noDeckText: {
     fontSize: 20,
     fontWeight: 'bold'
-  },
-  buttonContainer: {
-    marginTop: 30,
-    flexDirection:'row',
-    justifyContent: 'space-around'
-  },
-  button: {
-    justifyContent: 'center',
-    borderRadius: 2,
-    height: 30,
-    width: 100,
-    shadowOpacity: 1,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    elevation: 1
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white'
   }
 
 });

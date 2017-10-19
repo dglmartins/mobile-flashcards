@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation'
 import { addDeck } from '../actions';
 import { saveDeckAsyncStorage } from '../utils/api';
+import MainButton from './components/MainButton';
+import InputField from './components/InputField';
 
 
 class AddDeck extends Component {
@@ -37,26 +39,27 @@ class AddDeck extends Component {
     });
   }
 
+  changeTitleInput = (deckTitle) => {
+    this.setState({ deckTitle });
+  }
+
 
   render () {
     return (
         <View style={styles.container}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>What is the title of your new deck?</Text>
+            <Text style={styles.titleText}>Input Deck Title</Text>
           </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              value={this.state.deckTitle}
-              onChangeText={(deckTitle) => this.setState({deckTitle})}
-              placeholder='Deck Title'
-              underlineColorAndroid='#dedede'
-            />
-          </View>
+          <InputField
+            inputValue={this.state.deckTitle}
+            handleTextChange={this.changeTitleInput}
+            placeholder='Deck Title'
+          />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={this.onAddDeck}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+            <MainButton
+              handlePress={this.onAddDeck}
+              buttonText="Submit"
+            />
           </View>
         </View>
     );
@@ -81,50 +84,8 @@ const styles = StyleSheet.create({
     fontSize: 35,
     textAlign: 'center'
   },
-  inputContainer: {
-    alignSelf: 'stretch',
-    marginTop: 30,
-    backgroundColor: '#fff',
-    marginRight: 15,
-    marginLeft: 15,
-    borderRadius: 5,
-    shadowOpacity: 1,
-    paddingBottom: 5,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    elevation: 1,
-    justifyContent: 'space-around'
-  },
-  input: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: Platform.OS === 'ios' ? '#dedede' : 'white',
-    marginLeft: 10,
-    marginRight: 10,
-  },
   buttonContainer: {
     marginTop: 30,
-  },
-  button: {
-    backgroundColor: '#16aacb',
-    justifyContent: 'center',
-    borderRadius: 2,
-    height: 30,
-    width: 100,
-    shadowOpacity: 1,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    elevation: 1
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white'
   }
 });
 

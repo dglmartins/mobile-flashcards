@@ -3,16 +3,21 @@ import {
   StyleSheet,
   Text,
   View,
+  Animated
 } from 'react-native';
 import { connect } from 'react-redux';
 import { nextQuestion, resetQuiz, finishQuiz, markCorrect, toggleAnswer } from '../../actions';
 import QuizResults from './components/QuizResults';
 import QuizProgress from './components/QuizProgress';
-import QACard from './components/QACard';
 import ToggleAnswerButton from './components/ToggleAnswerButton';
 import MainButton from '../components/MainButton';
 
 class Quiz extends Component {
+
+  state = {
+    cardRotateAnim: new Animated.Value(0),
+    animationFinished: true
+  }
 
   componentWillMount() {
     this.props.resetQuiz()
@@ -20,13 +25,10 @@ class Quiz extends Component {
 
   markCorrect = () => {
     if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
-
       this.props.markCorrect();
       this.props.finishQuiz();
-
       return
     }
-
     this.props.toggleAnswer(false);
     this.props.markCorrect();
     this.props.nextQuestion();
@@ -36,7 +38,6 @@ class Quiz extends Component {
   markIncorrect = () => {
     if (this.props.quizControl.questionNumber === this.props.deck.questions.length) {
       this.props.finishQuiz();
-
       return
     }
     this.props.toggleAnswer(false);
@@ -46,24 +47,48 @@ class Quiz extends Component {
 
   restart = () => {
     this.props.resetQuiz()
+  }
 
+  animateCard = (value) => {
+    this.setState({ animationFinished: false});
+      Animated.timing(
+        this.state.cardRotateAnim,
+        {
+          toValue: value,
+          duration: 300
+        }
+      ).start();
+    setTimeout(() => this.setState({ animationFinished: true }), 300);
   }
 
   toggleAnswer = () => {
-    this.props.quizControl.showingAnswer
-      ? this.props.toggleAnswer(false)
-      : this.props.toggleAnswer(true)
+    if (this.props.quizControl.showingAnswer) {
+      this.props.toggleAnswer(false);
+      this.animateCard(0);
+    } else {
+      this.props.toggleAnswer(true);
+      this.animateCard(1);
+    }
   }
 
 
   render () {
+    const rotateX = this.state.cardRotateAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '180deg']
+    });
+    const { rightAnswerCount, questionNumber, showingAnswer, quizFinished } = this.props.quizControl;
+    const { animationFinished } = this.state;
+    const { questions } = this.props.deck;
+    const questionCount = questions.length;
+    const cardBackgroundColor = showingAnswer ? '#ea7a87' : '#16aacb'
     return (
-        (this.props.quizControl.quizFinished
+        (quizFinished
           ? (
             <View style={styles.container}>
               <QuizResults
-                rightAnswerCount={this.props.quizControl.rightAnswerCount}
-                questionCount={this.props.deck.questions.length}
+                rightAnswerCount={rightAnswerCount}
+                questionCount={questionCount}
                 handlePress={this.restart}
               />
             </View>
@@ -73,29 +98,38 @@ class Quiz extends Component {
               {this.props.deck && (
                 <View>
                   <QuizProgress
-                    questionCount={this.props.deck.questions.length}
-                    questionNumber={this.props.quizControl.questionNumber}
+                    questionCount={questionCount}
+                    questionNumber={questionNumber}
                   />
-                  <QACard
-                    showingAnswer={this.props.quizControl.showingAnswer}
-                    answer={this.props.deck.questions[this.props.quizControl.questionNumber - 1].answer}
-                    question={this.props.deck.questions[this.props.quizControl.questionNumber - 1].question}
-                  />
-                  <ToggleAnswerButton
-                    showingAnswer={this.props.quizControl.showingAnswer}
-                    handlePress={this.toggleAnswer}
-                  />
-                  <View style={styles.buttonContainer}>
-                    <MainButton
-                      handlePress={this.markCorrect}
-                      buttonText="Correct"
-                    />
-                    <MainButton
-                      handlePress={this.markIncorrect}
-                      buttonText="Incorrect"
-                      extraStyle={{backgroundColor: "#ea7a87"}}
-                    />
-                  </View>
+                  <Animated.View style={[styles.questionAnswerContainer, {transform: [{ rotateX }]},{backgroundColor: cardBackgroundColor}]}>
+
+                      <Animated.Text style={[styles.questionText, {transform: [{ rotateX }]}]}>
+                        {showingAnswer
+                          ? questions[questionNumber - 1].answer
+                          : questions[questionNumber - 1].question
+                        }
+                      </Animated.Text>
+
+                  </Animated.View>
+                  {this.state.animationFinished && (
+                    <View>
+                      <ToggleAnswerButton
+                        showingAnswer={showingAnswer}
+                        handlePress={this.toggleAnswer}
+                      />
+                      <View style={styles.buttonContainer}>
+                        <MainButton
+                          handlePress={this.markCorrect}
+                          buttonText="Correct"
+                        />
+                        <MainButton
+                          handlePress={this.markIncorrect}
+                          buttonText="Incorrect"
+                          extraStyle={{backgroundColor: "#ea7a87"}}
+                        />
+                      </View>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -117,6 +151,24 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 30,
+  },
+  questionAnswerContainer: {
+    alignSelf: 'stretch',
+    borderWidth: 4,
+    borderColor: '#dedede',
+    justifyContent: 'center',
+    marginTop: 25,
+    backgroundColor: '#006c84',
+    height: 200,
+    marginLeft: 25,
+    marginRight: 25
+
+  },
+  questionText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold'
   }
 });
 

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet,
+import {
+  StyleSheet,
   Text,
   View,
   TextInput,
   Platform,
-  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation'
 import { addCard } from '../actions';
 import { addCardAsyncStorage } from '../utils/api';
+import MainButton from './components/MainButton';
+import InputField from './components/InputField';
 
 
 class AddCard extends Component {
@@ -33,33 +34,33 @@ class AddCard extends Component {
     });
   }
 
+  changeQuestionInput = (question) => {
+    this.setState({ question })
+  }
+
+  changeAnswerInput = (answer) => {
+    this.setState({ answer })
+  }
 
   render () {
     return (
         <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              value={this.state.question}
-              onChangeText={(question) => this.setState({question})}
-              placeholder='Write question here'
-              underlineColorAndroid='#dedede'
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              value={this.state.answer}
-              onChangeText={(answer) => this.setState({answer})}
-              placeholder='Write answer here'
-              underlineColorAndroid='#dedede'
-              multiLine={true}
-            />
-          </View>
+          <Text>Add Question and Answer to Flashcard</Text>
+          <InputField
+            inputValue={this.state.question}
+            handleTextChange={this.changeQuestionInput}
+            placeholder='Write question here'
+          />
+          <InputField
+            inputValue={this.state.answer}
+            handleTextChange={this.changeAnswerInput}
+            placeholder='Write answer here'
+          />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={this.onAddCard}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+            <MainButton
+              handlePress={this.onAddCard}
+              buttonText="Submit"
+            />
           </View>
         </View>
     );
@@ -73,53 +74,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 100
-  },
-  inputContainer: {
-    alignSelf: 'stretch',
-    marginTop: 30,
-    backgroundColor: '#fff',
-    marginRight: 15,
-    marginLeft: 15,
-    borderRadius: 5,
-    shadowOpacity: 1,
-    paddingBottom: 5,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    elevation: 1,
-    justifyContent: 'space-around'
-  },
-  input: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: Platform.OS === 'ios' ? '#dedede' : 'white',
-    marginLeft: 10,
-    marginRight: 10,
-    fontSize: 10
+    paddingTop: 25
   },
   buttonContainer: {
     marginTop: 30,
-  },
-  button: {
-    backgroundColor: '#16aacb',
-    justifyContent: 'center',
-    borderRadius: 2,
-    height: 30,
-    width: 100,
-    shadowOpacity: 1,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    elevation: 1
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white'
   }
 });
 

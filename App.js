@@ -59,7 +59,8 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
     navigationOptions: {
-      title: 'Home'
+      title: 'Home',
+      headerBackTitle: 'Home',
     }
   },
   DeckDetail: {
@@ -67,8 +68,9 @@ const MainNavigator = StackNavigator({
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#16aacb'
+        backgroundColor: '#16aacb',
       },
+      headerBackTitle: 'Back',
       title: `${navigation.state.params.title}`,
     })
   },
@@ -79,6 +81,7 @@ const MainNavigator = StackNavigator({
       headerStyle: {
         backgroundColor: '#16aacb'
       },
+      headerBackTitle: 'Back',
       title: "Add Card",
     }
   },
@@ -89,6 +92,7 @@ const MainNavigator = StackNavigator({
       headerStyle: {
         backgroundColor: '#16aacb'
       },
+      headerBackTitle: 'Back',
       title: "Quiz",
     }
   }
