@@ -13,7 +13,7 @@ import { saveDeckAsyncStorage } from '../utils/api';
 import MainButton from './components/MainButton';
 import InputField from './components/InputField';
 
-// Class component for managing state of its own decktTitle field. 
+// Class component for managing state of its own decktTitle field.
 class AddDeck extends Component {
   state = {
     deckTitle: ''
@@ -33,9 +33,12 @@ class AddDeck extends Component {
     }
     saveDeckAsyncStorage(deckTitle).then(() => {
       this.props.addDeck(deckTitle);
-      this.props.navigation.dispatch(NavigationActions.navigate({
-        routeName: 'Decks'
-      }))
+      this.props.navigation.dispatch(NavigationActions.navigate(
+        {
+          routeName: 'DeckDetail',
+          params: {title: deckTitle}
+        },
+      ))
       this.setState({deckTitle: ''})
     });
   }

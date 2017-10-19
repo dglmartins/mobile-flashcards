@@ -5,6 +5,7 @@ import { Constants } from 'expo';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { setLocalNotification } from './utils/helpers';
 import reducer from './reducers';
 import DeckList from './features/DeckList';
 import AddDeck from './features/AddDeck';
@@ -64,7 +65,7 @@ const MainNavigator = StackNavigator({
     screen: Tabs,
     navigationOptions: {
       title: 'Home',
-      headerBackTitle: 'Home',
+      headerBackTitle: 'Back',
     }
   },
   DeckDetail: {
@@ -104,6 +105,9 @@ const MainNavigator = StackNavigator({
 
 //App renders Status Bar and MainNavigator, making the first page of the app DeckList
 class App extends Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
 
   render() {
     return (

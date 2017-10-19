@@ -3,6 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import MainButton from './components/MainButton';
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/helpers';
+
 
 //Stateless functional component, called via route by a button on DeckList.
 const DeckDetail = (props) => {
@@ -17,18 +22,20 @@ const DeckDetail = (props) => {
     ))
   }
 
-  //Navigates to Quiz, passing title as a param. Does a check to see if there is at least one card, or else, no Quiz
+  //Does a check to see if there is at least one card, or else, no Quiz. Else navigates to Quiz, clears notifications and sets notifications for tomorrow. Passes to Quiz title as a param.
   const onNavigateToQuiz = (title)  => {
     if (props.deck.questions.length === 0) {
-      alert("Add at least one card to take Quiz")
-      return
+      alert("Add at least one card to take Quiz");
+      return;
     }
+
+    clearLocalNotification().then(setLocalNotification());
     props.navigation.dispatch(NavigationActions.navigate(
       {
         routeName: 'Quiz',
         params: {title}
       },
-    ))
+    ));
   }
 
   //renders the title of the deck, its current card count, a button to navigate to AddCard, a button to navigate to Quiz.
