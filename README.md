@@ -7,6 +7,8 @@ Install required dependencies
 
 Runs app in development mode.
 
+With Xcode installed, type `i` to launch IOS simulator.
+
 This project was tested in XCode Simulator.
 
 You can also open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.

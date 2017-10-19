@@ -11,6 +11,7 @@ import QuizResults from './components/QuizResults';
 import QuizProgress from './components/QuizProgress';
 import ToggleAnswerButton from './components/ToggleAnswerButton';
 import MainButton from '../components/MainButton';
+import Instructions from './components/Instructions';
 
 //Class compoenent to reset quiz control on redux on componentWillMount, and to keep state of animation.
 class Quiz extends Component {
@@ -127,17 +128,20 @@ class Quiz extends Component {
                         showingAnswer={showingAnswer}
                         handlePress={this.toggleAnswer}
                       />
-                      <View style={styles.buttonContainer}>
-                        <MainButton
-                          handlePress={this.markCorrect}
-                          buttonText="Correct"
-                        />
-                        <MainButton
-                          handlePress={this.markIncorrect}
-                          buttonText="Incorrect"
-                          extraStyle={{backgroundColor: "#ea7a87"}}
-                        />
-                      </View>
+                      <Instructions showingAnswer={showingAnswer}/>
+                      {showingAnswer && (
+                        <View style={styles.buttonContainer}>
+                          <MainButton
+                            handlePress={this.markCorrect}
+                            buttonText="Correct"
+                          />
+                          <MainButton
+                            handlePress={this.markIncorrect}
+                            buttonText="Incorrect"
+                            extraStyle={{backgroundColor: "#ea7a87"}}
+                          />
+                        </View>
+                      )}
                     </View>
                   )}
                 </View>
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
 
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 15,
   },
   questionAnswerContainer: {
     alignSelf: 'stretch',

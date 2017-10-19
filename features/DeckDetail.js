@@ -55,7 +55,7 @@ const DeckDetail = (props) => {
             <MainButton
               handlePress={() => onNavigateToAddCard(props.deck.title)}
               extraStyle={{backgroundColor: '#006c84'}}
-              buttonText="Add Card"
+              buttonText="Add Question"
             />
             <MainButton
               handlePress={() => onNavigateToQuiz(props.deck.title)}

@@ -7,9 +7,9 @@ import { StyleSheet,
 
 //Stateless functional component, renders a white button to toggle between answer and question
 const ToggleAnswerButton =(props) => (
-  <View style={styles.toggleQAContainer}>
-    <TouchableOpacity onPress={props.handlePress}>
-      <Text>
+  <View>
+    <TouchableOpacity onPress={props.handlePress} style={styles.toggleQAContainer}>
+      <Text style={styles.buttonText}>
         {props.showingAnswer
           ? "Show question"
           : "Show answer"
@@ -21,10 +21,19 @@ const ToggleAnswerButton =(props) => (
 
 const styles = StyleSheet.create({
   toggleQAContainer: {
+    backgroundColor: '#dedede',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 30,
+    borderRadius: 5,
     alignSelf: 'center',
-    marginTop: 30,
+    justifyContent: 'center',
+    marginTop: 15,
     marginRight: 15,
     marginLeft: 15,
+  },
+  buttonText: {
+    textAlign: 'center'
   }
 });
 

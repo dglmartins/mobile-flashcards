@@ -63,7 +63,7 @@ class AddDeck extends Component {
           <View style={styles.buttonContainer}>
             <MainButton
               handlePress={this.onAddDeck}
-              buttonText="Submit"
+              buttonText="Create Deck"
             />
           </View>
         </View>
